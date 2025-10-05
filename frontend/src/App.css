@@ -1221,3 +1221,42 @@
     display: none;
   }
 }
+
+.whats-tempo {
+  border: solid 2px blue;
+  padding: 3rem 6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: center;
+}
+
+.tempo-description {
+  max-width: 500px;
+  text-align: end;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: var(--md-sys-color-on-surface);
+  animation: fadeInUp 1s ease-out 0.4s both;
+}
+
+.tempo-title{
+  font-size: clamp(3rem, 6vw, 5rem);
+  text-align: center;
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0;
+  animation: fadeInUp 1s ease-out 0.2s both;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .tempo-main-text {
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .tempo-header {
+    max-width: 100%;
+  }
+}
