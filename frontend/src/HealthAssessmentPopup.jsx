@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./HealthAssessmentPopup.css";
 
 const HealthAssessmentPopup = ({ isOpen, onClose }) => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     sex: "",
     isPregnant: false,
@@ -45,7 +48,6 @@ const HealthAssessmentPopup = ({ isOpen, onClose }) => {
     setSubmitError(null);
 
     try {
-      // Prepare the data for submission
       const assessmentData = {
         sex: formData.sex,
         isPregnant: formData.sex === "female" ? formData.isPregnant : null,
@@ -57,32 +59,23 @@ const HealthAssessmentPopup = ({ isOpen, onClose }) => {
 
       console.log("Submitting Health Assessment Data:", assessmentData);
 
-      // Send data to backend
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/health-assessment`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(assessmentData),
         }
       );
 
-      if (!response.ok) {
-        throw new Error(`Server error: ${response.status}`);
-      }
+      if (!response.ok) throw new Error(`Server error: ${response.status}`);
 
       const result = await response.json();
       console.log("Assessment result:", result);
+      sessionStorage.setItem("healthResult", JSON.stringify(result));
 
-      setSubmitSuccess(true);
-
-      // Close popup after a short delay to show success message
-      setTimeout(() => {
-        onClose();
-        setSubmitSuccess(false);
-      }, 2000);
+      onClose();
+      navigate("/results");
     } catch (error) {
       console.error("Error submitting health assessment:", error);
       setSubmitError(error.message || "Failed to submit assessment");
@@ -118,7 +111,7 @@ const HealthAssessmentPopup = ({ isOpen, onClose }) => {
       <div className="popup-container" onClick={(e) => e.stopPropagation()}>
         <div className="popup-header">
           <h2 className="popup-title">
-            <span className="form-label"></span>
+            <span className="title-icon"></span>
             Health Assessment
           </h2>
           <button className="close-button" onClick={onClose}>

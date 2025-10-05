@@ -138,36 +138,73 @@ app.post('/api/health-assessment', async (req, res) => {
       id: Date.now().toString(),
       timestamp: new Date().toISOString(),
       ...req.body
+    };
+
+    console.log('Health Assessment Received:', healthAssessment);
+
+    // --- 1️⃣ Obtener coordenadas de la ciudad ---
+    const city = healthAssessment.city;
+    if (!city) {
+      return res.status(400).json({ error: 'City is required in assessment' });
     }
 
-    // Log the assessment for debugging
-    console.log('Health Assessment Received:', healthAssessment)
+    const geoUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(
+      city
+    )}&limit=1&appid=${API_KEY}`;
 
-    // Generate AI recommendation using Gemini
+    const geoRes = await fetch(geoUrl);
+    if (!geoRes.ok) {
+      throw new Error(`Failed to fetch coordinates for city: ${geoRes.status}`);
+    }
+
+    const geoData = await geoRes.json();
+    if (!geoData.length) {
+      return res.status(404).json({ error: `City '${city}' not found` });
+    }
+
+    const { lat, lon } = geoData[0];
+
+    // --- 2️⃣ Obtener datos de calidad del aire ---
+    const airUrl = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
+    const airRes = await fetch(airUrl);
+
+    if (!airRes.ok) {
+      throw new Error(`Failed to fetch air quality data: ${airRes.status}`);
+    }
+
+    const airData = await airRes.json();
+    const airInfo = airData.list[0];
+
+    // --- 3️⃣ Generar recomendación con Gemini ---
     let recommendation = null;
     try {
-      recommendation = await generateHealthRecommendation(healthAssessment);
+      recommendation = await generateHealthRecommendation({
+        ...healthAssessment,
+        airQuality: airInfo
+      });
       console.log('Generated recommendation:', recommendation);
     } catch (geminiError) {
       console.error('Failed to generate AI recommendation:', geminiError);
-      // Continue without recommendation if Gemini fails
       recommendation = 'AI recommendation service temporarily unavailable.';
     }
 
-    res.json({
-      success: true,
-      data: healthAssessment,
-      recommendation: recommendation,
-      message: 'Health assessment received and processed successfully'
-    })
+    // --- 4️⃣ Devolver ambos en un array ---
+    res.json([
+      recommendation,
+      {
+        aqi: airInfo.main.aqi,
+        components: airInfo.components
+      }
+    ]);
 
   } catch (error) {
-    console.error('Error processing health assessment:', error)
-    res.status(500).json({ 
-      error: 'Internal server error while processing assessment' 
-    })
+    console.error('Error processing health assessment:', error);
+    res.status(500).json({
+      error: 'Internal server error while processing assessment'
+    });
   }
-})
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
