@@ -114,6 +114,83 @@ function App() {
           </div> */}
         </div>
       </div>
+
+      {/* Why ReBreath Section */}
+      <div className="why-section">
+        {/* Animated Background Elements */}
+        <div className="why-background">
+          <div className="floating-orb orb-1"></div>
+          <div className="floating-orb orb-2"></div>
+          <div className="floating-orb orb-3"></div>
+          <div className="floating-orb orb-4"></div>
+          <div className="floating-orb orb-5"></div>
+          <div className="floating-orb orb-6"></div>
+          
+          <div className="wave-pattern wave-1"></div>
+          <div className="wave-pattern wave-2"></div>
+          <div className="wave-pattern wave-3"></div>
+          
+          <div className="geometric-shape triangle"></div>
+          <div className="geometric-shape circle"></div>
+          <div className="geometric-shape square"></div>
+          
+          <div className="data-stream stream-1"></div>
+          <div className="data-stream stream-2"></div>
+          <div className="data-stream stream-3"></div>
+        </div>
+        
+        <div className="why-container">
+          <div className="why-header">
+            <h2 className="why-title">
+              <span className="">Why</span>
+              <span className=" highlight">ReBreath?</span>
+            </h2>
+          </div>
+          
+          <div className="why-content">
+            <div className="why-main-text">
+              <p className="why-description">
+                ReBreath transforms atmospheric data into 
+                <span className="highlight-text"> personalized health insights</span>, 
+                adapting recommendations to your individual risk level and environment.
+              </p>
+              
+              <div className="why-tagline-container">
+                <p className="why-tagline">
+                  <span className="tagline-bold">Breathe informed.</span> 
+                  <span className="tagline-light">Live better.</span>
+                </p>
+              </div>
+            </div>
+            
+            <div className="why-features">
+              <div className="feature-item">
+                <div className="feature-icon">🧠</div>
+                <div className="feature-text">
+                  <span className="feature-title">AI-Powered Analysis</span>
+                  <span className="feature-desc">Advanced algorithms for precise predictions</span>
+                </div>
+              </div>
+              
+              <div className="feature-item">
+                <div className="feature-icon">🎯</div>
+                <div className="feature-text">
+                  <span className="feature-title">Personalized Insights</span>
+                  <span className="feature-desc">Tailored recommendations for your health</span>
+                </div>
+              </div>
+              
+              <div className="feature-item">
+                <div className="feature-icon">⚡</div>
+                <div className="feature-text">
+                  <span className="feature-title">Real-time Updates</span>
+                  <span className="feature-desc">Instant alerts and monitoring</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
