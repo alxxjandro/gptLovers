@@ -1,0 +1,170 @@
+{
+  "info": {
+    "name": "ReBreath Health Assessment API Tests",
+    "description": "Test collection for health assessment endpoint",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Low Risk Male",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sex\": \"male\",\n  \"age\": 25,\n  \"respiratoryCondition\": \"none\",\n  \"cardiovascularCondition\": \"none\",\n  \"city\": \"New York\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3001/api/health-assessment",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "health-assessment"]
+        }
+      }
+    },
+    {
+      "name": "High Risk Elderly with Conditions",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sex\": \"female\",\n  \"isPregnant\": false,\n  \"age\": 70,\n  \"respiratoryCondition\": \"copd\",\n  \"cardiovascularCondition\": \"heart failure\",\n  \"city\": \"Los Angeles\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3001/api/health-assessment",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "health-assessment"]
+        }
+      }
+    },
+    {
+      "name": "Pregnant Female Medium Risk",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sex\": \"female\",\n  \"isPregnant\": true,\n  \"age\": 28,\n  \"respiratoryCondition\": \"asthma\",\n  \"cardiovascularCondition\": \"none\",\n  \"city\": \"Chicago\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3001/api/health-assessment",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "health-assessment"]
+        }
+      }
+    },
+    {
+      "name": "Young Adult with Respiratory Issues",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sex\": \"male\",\n  \"age\": 19,\n  \"respiratoryCondition\": \"bronchitis\",\n  \"cardiovascularCondition\": \"none\",\n  \"city\": \"Miami\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3001/api/health-assessment",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "health-assessment"]
+        }
+      }
+    },
+    {
+      "name": "Missing Required Fields (Error Test)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sex\": \"male\",\n  \"respiratoryCondition\": \"none\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3001/api/health-assessment",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "health-assessment"]
+        }
+      }
+    },
+    {
+      "name": "Invalid Age (Error Test)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sex\": \"female\",\n  \"age\": 150,\n  \"respiratoryCondition\": \"none\",\n  \"cardiovascularCondition\": \"none\",\n  \"city\": \"Boston\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3001/api/health-assessment",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "health-assessment"]
+        }
+      }
+    },
+    {
+      "name": "Invalid Sex Value (Error Test)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sex\": \"other\",\n  \"age\": 30,\n  \"respiratoryCondition\": \"none\",\n  \"cardiovascularCondition\": \"none\",\n  \"city\": \"Seattle\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3001/api/health-assessment",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "health-assessment"]
+        }
+      }
+    }
+  ]
+}

@@ -1,12 +1,22 @@
 import { useState } from "react";
 import GlobeVisual from "./GlobeVisual";
+import HealthAssessmentPopup from "./HealthAssessmentPopup";
 import "./App.css";
 
 function App() {
   const [isDarkTheme, setIsDarkTheme] = useState(true);
+  const [showHealthAssessment, setShowHealthAssessment] = useState(false);
 
   const toggleTheme = () => {
     setIsDarkTheme(!isDarkTheme);
+  };
+
+  const openHealthAssessment = () => {
+    setShowHealthAssessment(true);
+  };
+
+  const closeHealthAssessment = () => {
+    setShowHealthAssessment(false);
   };
 
   return (
@@ -82,7 +92,7 @@ function App() {
           </p>
 
           <div className="cta-container">
-            <button className="cta-button">
+            <button className="cta-button" onClick={openHealthAssessment}>
               <span className="button-text">Explore Now</span>
               <div className="button-shine"></div>
               <div className="button-ripple"></div>
@@ -204,6 +214,12 @@ function App() {
           </p>
         </div>
       </div>
+
+      {/* Health Assessment Popup */}
+      <HealthAssessmentPopup 
+        isOpen={showHealthAssessment} 
+        onClose={closeHealthAssessment} 
+      />
     </div>
   );
 }
