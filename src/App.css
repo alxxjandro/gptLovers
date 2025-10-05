@@ -392,12 +392,51 @@
   align-items: center;
   gap: 20px; /* Espaciado entre el gauge y el mapa */
   padding: 20px;
+  gap: 2rem;
+  max-width: 100%;
+  align-items: center;
+}
+
+.parameter-container {
+  margin-top: 0rem;
+  margin-left: 0rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: left;
+  gap: 20px; /* Espaciado entre el gauge y el mapa */
+  padding: 20px;
+  gap: 2rem;
+  max-width: 100%;
 }
 
 .gauge-container {
   min-width: 310px;
   flex: 1;
   min-height: 100%;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 8rem; /* Ajusta la separación desde la parte superior */
+  left: 8rem; /* Ajusta la separación desde la izquierda */
+  width: 320px; /* Tamaño del contenedor */
+  height: 400px; /* Tamaño del contenedor */
+}
+
+.map-container {
+  min-width: 310px;
+  flex: 2;
+  height: 400px; /* Altura del contenedor del mapa */
+  background-color: #ffffff; /* Fondo blanco */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para destacar */
+  border-radius: 2rem; /* Bordes redondeados */
+}
+.level-container {
+  width: 310px;
+  flex: 1;
+  min-height: 100%;
+  flex-direction: column;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -410,13 +449,17 @@
   height: 400px; /* Tamaño del contenedor */
 }
 
-.map-container {
+.gemini-container {
   min-width: 310px;
+  max-width: 890px;
   flex: 2;
-  height: 400px; /* Altura del contenedor del mapa */
-  background-color: #ffffff; /* Fondo blanco */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para destacar */
+  height: 200px; /* Altura del contenedor */
+  border: 1px solid #808080; /* Borde */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra */
   border-radius: 2rem; /* Bordes redondeados */
+  overflow-y: auto; /* Habilita el scroll vertical */
+  overflow-x: hidden; /* Opcional: evita el scroll horizontal */
+  padding: 10px; /* Espaciado interno */
 }
 
 /* Title Container */
@@ -660,12 +703,6 @@
     order: -1;
   }
   
-  .content-container {
-    /*marcar borde de cotenedor en rojo*/
-    max-width: 100%;
-    align-items: center;
-  }
-  
   .description {
     text-align: center;
   }
@@ -748,9 +785,6 @@
     height: 250px;
   }
   
-  .content-container {
-    gap: 2rem;
-  }
   
   .stats-container {
     flex-wrap: wrap;
