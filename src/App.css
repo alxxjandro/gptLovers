@@ -385,14 +385,38 @@
 
 /* Content Container */
 .content-container {
+  margin-top: 7rem;
   display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-  max-width: 500px;
-  padding: 2rem 0;
-  animation: slideInRight 1s ease-out;
+  flex-wrap: wrap;
+  justify-content: space-between;
   align-items: center;
-  text-align: center;
+  gap: 20px; /* Espaciado entre el gauge y el mapa */
+  padding: 20px;
+}
+
+.gauge-container {
+  min-width: 310px;
+  flex: 1;
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 8rem; /* Ajusta la separación desde la parte superior */
+  left: 8rem; /* Ajusta la separación desde la izquierda */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 320px; /* Tamaño del contenedor */
+  height: 400px; /* Tamaño del contenedor */
+}
+
+.map-container {
+  min-width: 310px;
+  flex: 2;
+  height: 400px; /* Altura del contenedor del mapa */
+  background-color: #ffffff; /* Fondo blanco */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para destacar */
+  border-radius: 2rem; /* Bordes redondeados */
 }
 
 /* Title Container */
@@ -615,6 +639,12 @@
   letter-spacing: 0.5px;
 }
 
+/* Ajustes para el texto dentro del gauge */
+.gauge-container text {
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
 /* Mobile Responsive */
 @media (max-width: 1024px) {
   .hero-section {
@@ -631,6 +661,7 @@
   }
   
   .content-container {
+    /*marcar borde de cotenedor en rojo*/
     max-width: 100%;
     align-items: center;
   }
