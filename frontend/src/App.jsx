@@ -140,27 +140,21 @@ function App() {
         </div>
         
         <div className="why-container">
-          <div className="why-header">
-            <h2 className="why-title">
-              <span className="">Why</span>
-              <span className=" highlight">ReBreath?</span>
-            </h2>
-          </div>
           
           <div className="why-content">
             <div className="why-main-text">
+          <div className="why-header">
+            <h2 className="why-title">
+              <span className="title-line">Why</span>
+              <span className="title-line highlight">ReBreath</span>
+            </h2>
+          </div>
               <p className="why-description">
                 ReBreath transforms atmospheric data into 
                 <span className="highlight-text"> personalized health insights</span>, 
                 adapting recommendations to your individual risk level and environment.
               </p>
-              
-              <div className="why-tagline-container">
-                <p className="why-tagline">
-                  <span className="tagline-bold">Breathe informed.</span> 
-                  <span className="tagline-light">Live better.</span>
-                </p>
-              </div>
+            
             </div>
             
             <div className="why-features">
