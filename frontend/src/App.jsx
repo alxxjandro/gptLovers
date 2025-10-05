@@ -2,6 +2,8 @@ import { useState } from "react";
 import GlobeVisual from "./GlobeVisual";
 import HealthAssessmentPopup from "./HealthAssessmentPopup";
 import tempoImage from "./assets/tempo.jpg";
+import spaceAppsLogo from "./assets/spaceappslogo.svg";
+import spaceAppsLogo2 from "./assets/spaceappslogowhite.svg";
 import "./App.css";
 
 function App() {
@@ -232,14 +234,9 @@ function App() {
         <div className="footer-container">
           <div className="footer-left">
             <img
-              src="https://www.nasa.gov/wp-content/themes/nasa/assets/images/nasa-logo.svg"
-              alt="NASA Logo"
               className="footer-logo"
-            />
-            <img
-              src="https://www.spaceappschallenge.org/static/images/logos/space-apps-logo-light.svg"
-              alt="NASA Space Apps Challenge"
-              className="footer-spaceapps"
+              src={!isDarkTheme ? spaceAppsLogo : spaceAppsLogo2}
+              alt="NASA Space Apps Logo"
             />
           </div>
 

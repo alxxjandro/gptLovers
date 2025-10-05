@@ -1432,7 +1432,6 @@
   opacity: 1;
 }
 
-/* 🌐 Responsive Footer */
 @media (max-width: 768px) {
   .footer-container {
     flex-direction: column;
@@ -1455,4 +1454,3 @@
     font-size: 1rem;
   }
 }
-
