@@ -1,24 +1,20 @@
-// app.js
-import express from "express";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+require('dotenv').config();
 
-const app = express();
-app.use(express.json());
-
-const API_KEY = "AIzaSyDAhY7Kswg43kmaQZf3_zByXhhOHf4t8D0";
+const API_KEY = process.env.GEMINI_API_KEY;
 const MODEL_NAME = "gemini-2.5-pro";
 
 const genAI = new GoogleGenerativeAI(API_KEY);
 const model = genAI.getGenerativeModel({ model: MODEL_NAME });
 
-// Endpoint para generar recomendación
-app.post("/api/recommendation", async (req, res) => {
+// Function to generate health recommendation based on assessment data
+async function generateHealthRecommendation(healthAssessmentData) {
   try {
     const prompt = `
 You are an air quality and public health assistant.  
 Using the following inputs, generate a short, personalized recommendation about whether the user should limit outdoor activities, wear a mask, or take other precautions due to air quality.
 
-${JSON.stringify(req.body, null, 2)}
+${JSON.stringify(healthAssessmentData, null, 2)}
 
 Instructions:
 1. Explain the overall air quality level in simple terms (good, moderate, unhealthy, very unhealthy, hazardous).
@@ -33,12 +29,13 @@ Instructions:
     const result = await model.generateContent(prompt);
     const text = result.response.text();
 
-    res.json({ recommendation: text });
+    return text;
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Error generating recommendation" });
+    throw new Error("Error generating recommendation");
   }
-});
+}
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+module.exports = {
+  generateHealthRecommendation
+};

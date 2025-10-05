@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const { generateHealthRecommendation } = require('./gemini')
 require('dotenv').config()
 
 const app = express()
@@ -127,6 +128,44 @@ app.post('/api/air-quality/grid', async (req, res) => {
   } catch (error) {
     console.error('Error fetching grid air quality data:', error)
     res.status(500).json({ error: 'Failed to fetch grid air quality data' })
+  }
+})
+
+// Health Assessment endpoint
+app.post('/api/health-assessment', async (req, res) => {
+  try {
+    const healthAssessment = {
+      id: Date.now().toString(),
+      timestamp: new Date().toISOString(),
+      ...req.body
+    }
+
+    // Log the assessment for debugging
+    console.log('Health Assessment Received:', healthAssessment)
+
+    // Generate AI recommendation using Gemini
+    let recommendation = null;
+    try {
+      recommendation = await generateHealthRecommendation(healthAssessment);
+      console.log('Generated recommendation:', recommendation);
+    } catch (geminiError) {
+      console.error('Failed to generate AI recommendation:', geminiError);
+      // Continue without recommendation if Gemini fails
+      recommendation = 'AI recommendation service temporarily unavailable.';
+    }
+
+    res.json({
+      success: true,
+      data: healthAssessment,
+      recommendation: recommendation,
+      message: 'Health assessment received and processed successfully'
+    })
+
+  } catch (error) {
+    console.error('Error processing health assessment:', error)
+    res.status(500).json({ 
+      error: 'Internal server error while processing assessment' 
+    })
   }
 })
 
