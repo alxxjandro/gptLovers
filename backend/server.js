@@ -47,6 +47,53 @@ app.get('/api/geocode/zipcode', async (req, res) => {
   }
 })
 
+// Convert city name to coordinates
+app.get('/api/geocode/city', async (req, res) => {
+  const { city, limit = 5 } = req.query
+  
+  if (!city) {
+    return res.status(400).json({ error: 'City name is required' })
+  }
+
+  if (!API_KEY) {
+    return res.status(500).json({ error: 'OpenWeather API key not configured' })
+  }
+
+  try {
+    const cleanCity = city.toString().trim()
+    const url = `http://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(cleanCity)}&limit=${limit}&appid=${API_KEY}`
+    const response = await fetch(url)
+    
+    if (!response.ok) {
+      throw new Error(`Geocoding API request failed: ${response.status}`)
+    }
+    
+    const data = await response.json()
+    
+    if (!data || data.length === 0) {
+      return res.status(404).json({ 
+        error: `City "${cleanCity}" not found`,
+        suggestion: 'Try a different spelling or include country (e.g., "Paris, France")'
+      })
+    }
+
+    // Return all results for user to choose from
+    const results = data.map(location => ({
+      lat: location.lat,
+      lon: location.lon,
+      name: location.name,
+      country: location.country,
+      state: location.state,
+      displayName: `${location.name}${location.state ? `, ${location.state}` : ''}, ${location.country}`
+    }))
+
+    res.json(results)
+  } catch (error) {
+    console.error('Error geocoding city:', error)
+    res.status(500).json({ error: 'Failed to geocode city' })
+  }
+})
+
 // Get air quality data for a single location
 app.get('/api/air-quality', async (req, res) => {
   const { lat, lon } = req.query

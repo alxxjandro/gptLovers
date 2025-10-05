@@ -72,7 +72,10 @@ const HealthAssessmentPopup = ({ isOpen, onClose }) => {
 
       const result = await response.json();
       console.log("Assessment result:", result);
+      
+      // Store both the result and the assessment data (including city)
       sessionStorage.setItem("healthResult", JSON.stringify(result));
+      sessionStorage.setItem("healthAssessment", JSON.stringify(assessmentData));
 
       onClose();
       navigate("/results");
