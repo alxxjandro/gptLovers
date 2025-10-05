@@ -4,27 +4,29 @@ export default function RadialGauge({ value = 0, isDarkTheme = true }) {
   const clamped = Math.max(0, Math.min(100, value));
   const textColor = isDarkTheme ? "#fff" : "#000";
 
+  // invertimos la escala: 0 bueno → 100 malo
+  const reversed = 100 - clamped;
+
   const color =
-    clamped <= 25
-      ? "redGradient"
-      : clamped <= 50
-      ? "orangeGradient"
-      : clamped <= 75
+    reversed <= 25
+      ? "greenGradient"
+      : reversed <= 50
       ? "yellowGradient"
-      : "greenGradient";
+      : reversed <= 75
+      ? "orangeGradient"
+      : "redGradient";
 
   const label =
-    clamped <= 25
-      ? "Hazardous"
-      : clamped <= 50
-      ? "Unhealthy"
-      : clamped <= 75
+    reversed <= 25
+      ? "Good"
+      : reversed <= 50
       ? "Moderate"
-      : "Good";
+      : reversed <= 75
+      ? "Unhealthy"
+      : "Hazardous";
 
-  // Circunferencia del círculo (r = 45 para SVG de 120x120)
   const circumference = 2 * Math.PI * 45;
-  const offset = circumference - (clamped / 100) * circumference;
+  const offset = circumference - (reversed / 100) * circumference;
 
   return (
     <div className={`gauge-card ${isDarkTheme ? "dark" : "light"}`}>

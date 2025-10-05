@@ -13,6 +13,16 @@ const HealthAssessmentPopup = ({ isOpen, onClose }) => {
     cardiovascularCondition: "none",
     city: "",
   });
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen]);
 
   // Reset form when popup opens
   useEffect(() => {
@@ -72,10 +82,13 @@ const HealthAssessmentPopup = ({ isOpen, onClose }) => {
 
       const result = await response.json();
       console.log("Assessment result:", result);
-      
+
       // Store both the result and the assessment data (including city)
       sessionStorage.setItem("healthResult", JSON.stringify(result));
-      sessionStorage.setItem("healthAssessment", JSON.stringify(assessmentData));
+      sessionStorage.setItem(
+        "healthAssessment",
+        JSON.stringify(assessmentData)
+      );
 
       onClose();
       navigate("/results");

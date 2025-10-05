@@ -3,7 +3,7 @@ import "./App.css";
 import RadialGauge from "./RadialGauge";
 import AirQualityMap from "./AirQualityMap";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001";
 
 function Results() {
   const [isDarkTheme, setIsDarkTheme] = useState(true);
@@ -12,7 +12,7 @@ function Results() {
   const [apiText, setApiText] = useState("Loading recommendation...");
   const [gaugeValue, setGaugeValue] = useState(0);
   const [components, setComponents] = useState({});
-  
+
   // Map-related state
   const [userPosition, setUserPosition] = useState(null);
   const [userAQData, setUserAQData] = useState(null);
@@ -26,10 +26,10 @@ function Results() {
       // Get saved health results
       const savedResult = sessionStorage.getItem("healthResult");
       const savedAssessment = sessionStorage.getItem("healthAssessment");
-      
+
       console.log("Debug - savedResult:", savedResult);
       console.log("Debug - savedAssessment:", savedAssessment);
-      
+
       if (savedResult) {
         const [recommendation, airData] = JSON.parse(savedResult);
         setApiText(recommendation);
@@ -37,59 +37,63 @@ function Results() {
         setComponents(airData?.components || {});
         sessionStorage.removeItem("healthResult");
       }
-      
+
       if (savedAssessment) {
         const assessmentData = JSON.parse(savedAssessment);
         const cityName = assessmentData.city;
         console.log("Debug - cityName from assessment:", cityName);
         sessionStorage.removeItem("healthAssessment");
-        
+
         if (cityName) {
           // Use the city from health assessment
           try {
             setMapLoading(true);
-            
-            const geocodeUrl = `${BACKEND_URL}/api/geocode/city?city=${encodeURIComponent(cityName)}&limit=1`;
+
+            const geocodeUrl = `${BACKEND_URL}/api/geocode/city?city=${encodeURIComponent(
+              cityName
+            )}&limit=1`;
             const geocodeRes = await fetch(geocodeUrl);
-            
+
             if (!geocodeRes.ok) {
               throw new Error(`City search failed: ${geocodeRes.status}`);
             }
-            
+
             const cityResults = await geocodeRes.json();
-            
+
             if (cityResults.length === 0) {
               throw new Error(`City "${cityName}" not found`);
             }
-            
+
             const locationData = cityResults[0];
             const lat = locationData.lat;
             const lon = locationData.lon;
-            
+
             setUserPosition([lat, lon]);
-            setLocationSource('city');
+            setLocationSource("city");
             setLocationInfo({
               name: locationData.name,
               country: locationData.country,
               state: locationData.state,
               displayName: locationData.displayName,
-              originalQuery: cityName
+              originalQuery: cityName,
             });
 
             // Fetch air quality data for the city location
             const aqUrl = `${BACKEND_URL}/api/air-quality?lat=${lat}&lon=${lon}`;
             const aqRes = await fetch(aqUrl);
-            
+
             if (!aqRes.ok) {
               throw new Error(`Air quality request failed: ${aqRes.status}`);
             }
-            
+
             const aqData = await aqRes.json();
-            setUserAQData({ main: { aqi: aqData.aqi }, components: aqData.components });
+            setUserAQData({
+              main: { aqi: aqData.aqi },
+              components: aqData.components,
+            });
             setMapLoading(false);
-            
           } catch (err) {
-            console.error('Error loading city data:', err);
+            console.error("Error loading city data:", err);
             setMapError(`Failed to load city data: ${err.message}`);
             setMapLoading(false);
           }
@@ -102,7 +106,7 @@ function Results() {
         fallbackToGeolocation();
       }
     };
-    
+
     const fallbackToGeolocation = () => {
       if (!navigator.geolocation) {
         setMapError("Geolocation is not supported by this browser");
@@ -116,18 +120,21 @@ function Results() {
             const lat = p.coords.latitude;
             const lon = p.coords.longitude;
             setUserPosition([lat, lon]);
-            setLocationSource('geolocation');
+            setLocationSource("geolocation");
 
             // Fetch current location AQ data from backend
             const url = `${BACKEND_URL}/api/air-quality?lat=${lat}&lon=${lon}`;
             const res = await fetch(url);
-            
+
             if (!res.ok) {
               throw new Error(`API request failed: ${res.status}`);
             }
-            
+
             const data = await res.json();
-            setUserAQData({ main: { aqi: data.aqi }, components: data.components });
+            setUserAQData({
+              main: { aqi: data.aqi },
+              components: data.components,
+            });
             setMapLoading(false);
           } catch (err) {
             setMapError(`Failed to fetch air quality data: ${err.message}`);
@@ -140,7 +147,7 @@ function Results() {
         }
       );
     };
-    
+
     initializeData();
   }, []);
 
@@ -163,35 +170,49 @@ function Results() {
       {/* Layout */}
       <div className="results-layout">
         <div className="results-map">
-          <div className="map-container" style={{ position: 'relative', height: '400px', borderRadius: '12px', overflow: 'hidden' }}>
+          <div
+            className="map-container"
+            style={{
+              position: "relative",
+              height: "400px",
+              borderRadius: "12px",
+              overflow: "hidden",
+            }}
+          >
             {mapLoading ? (
-              <div style={{ 
-                display: 'flex', 
-                justifyContent: 'center', 
-                alignItems: 'center', 
-                height: '100%',
-                backgroundColor: isDarkTheme ? '#1a1a1a' : '#f5f5f5',
-                color: textColor
-              }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100%",
+                  backgroundColor: isDarkTheme ? "#1a1a1a" : "#f5f5f5",
+                  color: textColor,
+                }}
+              >
                 Loading map...
               </div>
             ) : mapError ? (
-              <div style={{ 
-                display: 'flex', 
-                flexDirection: 'column',
-                justifyContent: 'center', 
-                alignItems: 'center', 
-                height: '100%',
-                backgroundColor: isDarkTheme ? '#1a1a1a' : '#f5f5f5',
-                color: textColor,
-                padding: '20px',
-                textAlign: 'center'
-              }}>
-                <div style={{ color: '#ff6b6b', marginBottom: '10px' }}>Map Error</div>
-                <div style={{ fontSize: '14px', opacity: 0.7 }}>{mapError}</div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100%",
+                  backgroundColor: isDarkTheme ? "#1a1a1a" : "#f5f5f5",
+                  color: textColor,
+                  padding: "20px",
+                  textAlign: "center",
+                }}
+              >
+                <div style={{ color: "#ff6b6b", marginBottom: "10px" }}>
+                  Map Error
+                </div>
+                <div style={{ fontSize: "14px", opacity: 0.7 }}>{mapError}</div>
               </div>
             ) : userPosition && userAQData ? (
-              <AirQualityMap 
+              <AirQualityMap
                 backendUrl={BACKEND_URL}
                 userPosition={userPosition}
                 userAQData={userAQData}
@@ -199,14 +220,16 @@ function Results() {
                 locationInfo={locationInfo}
               />
             ) : (
-              <div style={{ 
-                display: 'flex', 
-                justifyContent: 'center', 
-                alignItems: 'center', 
-                height: '100%',
-                backgroundColor: isDarkTheme ? '#1a1a1a' : '#f5f5f5',
-                color: textColor
-              }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100%",
+                  backgroundColor: isDarkTheme ? "#1a1a1a" : "#f5f5f5",
+                  color: textColor,
+                }}
+              >
                 Initializing map...
               </div>
             )}
@@ -225,9 +248,7 @@ function Results() {
 
           <div className="results-score">
             <h2 style={{ color: textColor }}>AQI: {gaugeValue}</h2>
-            <p style={{ color: textColor, opacity: 0.7 }}>
-              Based on OpenWeather Data
-            </p>
+            <p style={{ color: textColor, opacity: 0.7 }}>Air Quality Index</p>
           </div>
 
           <div className="results-params">
