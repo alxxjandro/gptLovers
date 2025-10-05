@@ -1,6 +1,7 @@
 import { useState } from "react";
 import GlobeVisual from "./GlobeVisual";
 import HealthAssessmentPopup from "./HealthAssessmentPopup";
+import tempoImage from "./assets/tempo.jpg";
 import "./App.css";
 
 function App() {
@@ -59,7 +60,7 @@ function App() {
       <div className="hero-section">
         <div className="globe-container">
           <div className="globe-glow"></div>
-          <GlobeVisual />
+          <GlobeVisual darkTheme={isDarkTheme} />
           <div className="floating-cards">
             <div className="floating-card card-1">
               <span className="card-icon">🌍</span>
@@ -199,27 +200,66 @@ function App() {
         </div>
 
         <div className="whats-tempo">
-          <h2 className="tempo-title">
-            <span className="title-line">What's</span>
-            <span className="title-line highlight">TEMPO?</span>
-          </h2>
-          <p className="tempo-description">
-            TEMPO is a UV-visible spectrometer and{" "}
-            <span className="highlight-text">
-              the first space-based instrument to measure atmospheric trace{" "}
-              gases{" "}
-            </span>
-            capturing high-resolution data on ozone, nitrogen dioxide and other
-            gases in the atmosphere
-          </p>
+          <div>
+            <h2 className="tempo-title">
+              <span className="title-line">What's</span>
+              <span className="title-line highlight">TEMPO?</span>
+            </h2>
+            <p className="tempo-description">
+              TEMPO is a UV-visible spectrometer and{" "}
+              <span className="highlight-text">
+                the first space-based instrument to measure atmospheric trace{" "}
+                gases{" "}
+              </span>
+              capturing high-resolution data on ozone, nitrogen dioxide and
+              other gases in the atmosphere
+            </p>
+          </div>
+          <div className="tempoImg">
+            <img src={tempoImage} alt="tempo map" />
+          </div>
         </div>
       </div>
 
       {/* Health Assessment Popup */}
-      <HealthAssessmentPopup 
-        isOpen={showHealthAssessment} 
-        onClose={closeHealthAssessment} 
+      <HealthAssessmentPopup
+        isOpen={showHealthAssessment}
+        onClose={closeHealthAssessment}
       />
+
+      {/* Footer Section */}
+      <footer className="footer-section">
+        <div className="footer-container">
+          <div className="footer-left">
+            <img
+              src="https://www.nasa.gov/wp-content/themes/nasa/assets/images/nasa-logo.svg"
+              alt="NASA Logo"
+              className="footer-logo"
+            />
+            <img
+              src="https://www.spaceappschallenge.org/static/images/logos/space-apps-logo-light.svg"
+              alt="NASA Space Apps Challenge"
+              className="footer-spaceapps"
+            />
+          </div>
+
+          <div className="footer-center">
+            <p className="footer-quote">
+              <span className="highlight-text">ReBreath</span> — powered by
+              data, driven by impact.
+            </p>
+            <p className="footer-small">
+              Built for <strong>NASA Space Apps Challenge 2025</strong>
+            </p>
+          </div>
+
+          <div className="footer-right">
+            <p className="footer-credits">
+              Designed with ❤️ by the ReBreath Team
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
