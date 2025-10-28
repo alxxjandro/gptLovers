@@ -1,0 +1,465 @@
+/* Health Assessment Popup Styles */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+.popup-container {
+  background: var(--md-sys-color-surface);
+  border-radius: 24px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 
+    0 24px 48px rgba(0, 0, 0, 0.2),
+    0 8px 16px rgba(0, 0, 0, 0.1);
+  transform: scale(0.9) translateY(20px);
+  animation: popupSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes popupSlideIn {
+  to {
+    transform: scale(1) translateY(0);
+  }
+}
+
+.popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 2rem 1rem;
+  background: var(--gradient-primary);
+  color: var(--md-sys-color-on-primary);
+}
+
+.popup-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.title-icon {
+  font-size: 1.8rem;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: var(--md-sys-color-on-primary);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.close-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+.close-icon {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.assessment-form {
+  padding: 2rem;
+  max-height: 70vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-blue) transparent;
+}
+
+/* Error and Success Messages */
+.error-message,
+.success-message {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.error-message {
+  background: rgba(244, 67, 54, 0.1);
+  border: 1px solid rgba(244, 67, 54, 0.3);
+  color: #d32f2f;
+}
+
+.success-message {
+  background: rgba(76, 175, 80, 0.1);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  color: #388e3c;
+}
+
+.error-icon,
+.success-icon {
+  font-size: 1.2rem;
+}
+
+.assessment-form::-webkit-scrollbar {
+  width: 6px;
+}
+
+.assessment-form::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.assessment-form::-webkit-scrollbar-thumb {
+  background: var(--primary-blue);
+  border-radius: 3px;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  font-weight: 500;
+  color: var(--md-sys-color-on-surface);
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+}
+
+/* Radio Button Styles */
+.radio-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.radio-option:hover {
+  background: var(--md-sys-color-surface-container);
+}
+
+.radio-option input[type="radio"] {
+  display: none;
+}
+
+.radio-custom {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--md-sys-color-outline);
+  border-radius: 50%;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.radio-option input[type="radio"]:checked + .radio-custom {
+  border-color: var(--primary-blue);
+  background: var(--primary-blue);
+}
+
+.radio-option input[type="radio"]:checked + .radio-custom::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+}
+
+.radio-text {
+  font-weight: 500;
+  color: var(--md-sys-color-on-surface);
+}
+
+/* Input Styles */
+.form-input {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 2px solid var(--md-sys-color-outline);
+  border-radius: 12px;
+  font-size: 1rem;
+  background: var(--md-sys-color-surface);
+  color: var(--md-sys-color-on-surface);
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+}
+
+.form-input::placeholder {
+  color: var(--md-sys-color-outline);
+}
+
+/* Select Styles */
+.form-select {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 2px solid var(--md-sys-color-outline);
+  border-radius: 12px;
+  font-size: 1rem;
+  background: var(--md-sys-color-surface);
+  color: var(--md-sys-color-on-surface);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.form-select:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+}
+
+.form-select option {
+  background: var(--md-sys-color-surface);
+  color: var(--md-sys-color-on-surface);
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--md-sys-color-outline);
+}
+
+.cancel-button {
+  background: transparent;
+  color: var(--md-sys-color-on-surface);
+  border: 2px solid var(--md-sys-color-outline);
+  padding: 0.875rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancel-button:hover {
+  background: var(--md-sys-color-surface-container);
+  border-color: var(--primary-blue);
+}
+
+.submit-button {
+  background: var(--gradient-primary);
+  color: var(--md-sys-color-on-primary);
+  border: none;
+  padding: 0.875rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 24px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(25, 118, 210, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.submit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(25, 118, 210, 0.4);
+}
+
+.submit-button .button-text {
+  position: relative;
+  z-index: 2;
+}
+
+.submit-button .button-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s;
+}
+
+.submit-button:hover .button-shine {
+  left: 100%;
+}
+
+.submit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.submit-button:disabled:hover {
+  transform: none;
+  box-shadow: 0 4px 16px rgba(25, 118, 210, 0.3);
+}
+
+/* Decorative Elements */
+.popup-decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.decoration-orb {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--gradient-accent);
+  opacity: 0.1;
+  animation: float 6s ease-in-out infinite;
+}
+
+.decoration-orb.orb-1 {
+  width: 80px;
+  height: 80px;
+  top: 10%;
+  right: 10%;
+  animation-delay: 0s;
+}
+
+.decoration-orb.orb-2 {
+  width: 60px;
+  height: 60px;
+  bottom: 15%;
+  left: 5%;
+  animation-delay: 2s;
+}
+
+.decoration-orb.orb-3 {
+  width: 40px;
+  height: 40px;
+  top: 60%;
+  right: 5%;
+  animation-delay: 4s;
+}
+
+/* Dark Theme Adjustments */
+.dark-theme .popup-container {
+  box-shadow: 
+    0 24px 48px rgba(0, 0, 0, 0.5),
+    0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.dark-theme .submit-button {
+  box-shadow: 0 4px 16px rgba(100, 181, 246, 0.4);
+}
+
+.dark-theme .submit-button:hover {
+  box-shadow: 0 8px 24px rgba(100, 181, 246, 0.5);
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .popup-container {
+    width: 95%;
+    margin: 1rem;
+  }
+  
+  .popup-header {
+    padding: 1.5rem 1.5rem 0.75rem;
+  }
+  
+  .assessment-form {
+    padding: 1.5rem;
+  }
+  
+  .popup-title {
+    font-size: 1.25rem;
+  }
+  
+  .radio-group {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+  
+  .form-actions button {
+    width: 100%;
+  }
+}
+
+/* Arreglo del scroll roto en móviles */
+.popup-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  overflow: hidden;
+}
+
+/* Permitir que solo el formulario sea scrollable */
+.assessment-form {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Bloquear el scroll del body cuando el popup esté abierto */
+body.popup-open {
+  overflow: hidden;
+  touch-action: none;
+  position: fixed;
+  width: 100%;
+}
+
+/* Mejora del scroll en iOS */
+@supports (-webkit-touch-callout: none) {
+  .assessment-form {
+    overflow-y: scroll;
+  }
+}
+
+/* En pantallas pequeñas, el popup ocupa más alto */
+@media (max-width: 640px) {
+  .popup-container {
+    height: 90vh;
+    max-height: none;
+  }
+
+  .assessment-form {
+    padding-bottom: 2rem; /* espacio extra para el botón */
+  }
+}
